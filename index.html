@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Tools</title>
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <svg width="28" height="28" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="120" height="120" rx="28" fill="#3584e4"/>
+            <rect x="26" y="20" width="66" height="82" rx="6" fill="white" opacity="0.95"/>
+            <path d="M74 20 L92 38 L74 38 Z" fill="#c5d8ec"/>
+            <rect x="36" y="44" width="40" height="4" rx="2" fill="#3584e4" opacity="0.7"/>
+            <rect x="36" y="53" width="34" height="4" rx="2" fill="#5c9ac8" opacity="0.5"/>
+            <rect x="36" y="62" width="38" height="4" rx="2" fill="#5c9ac8" opacity="0.5"/>
+            <rect x="28" y="76" width="32" height="14" rx="3" fill="#3584e4"/>
+            <text x="44" y="87" font-family="sans-serif" font-weight="bold" font-size="8.5" fill="white" text-anchor="middle">PDF</text>
+          </svg>
+        </div>
+        <h1 class="app-title">PDF Tools</h1>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="text" role="tab" aria-selected="true" aria-controls="panel-text">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M2 2h12v2H2V2zm0 4h12v2H2V6zm0 4h8v2H2v-2z"/>
+        </svg>
+        Extract Text
+      </button>
+      <button class="tab" data-tab="image" role="tab" aria-selected="false" aria-controls="panel-image">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M1 1h14v14H1V1zm1 1v12h12V2H2zm8 3a1 1 0 1 1 2 0 1 1 0 0 1-2 0zm-6 7l3-4 2 3 2-2 3 3H4z"/>
+        </svg>
+        PDF to Images
+      </button>
+    </nav>
+
+    <main class="main">
+
+      <!-- TEXT TAB -->
+      <section id="panel-text" class="panel active" role="tabpanel">
+        <div class="drop-zone" id="drop-text" tabindex="0" role="button" aria-label="Drop a PDF or click to choose">
+          <div class="drop-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M28 6H12a2 2 0 0 0-2 2v32a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V18L28 6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/>
+              <path d="M28 6v12h12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M16 26h16M16 32h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="drop-title">Drop a PDF here</p>
+          <p class="drop-sub">or <span class="link">click to choose a file</span></p>
+          <p class="drop-limits">Up to 256 MB · 250 pages</p>
+        </div>
+
+        <div class="progress-area hidden" id="progress-text">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-fill-text"></div>
+          </div>
+          <p class="progress-label" id="progress-label-text">Opening PDF…</p>
+        </div>
+
+        <div class="output-area hidden" id="output-text">
+          <div class="output-meta">
+            <span class="meta-label" id="text-meta"></span>
+            <div class="output-actions">
+              <button class="btn btn-ghost" id="btn-new-text">Open Another</button>
+              <button class="btn btn-primary" id="btn-copy">Copy Text</button>
+            </div>
+          </div>
+          <textarea class="text-output" id="text-result" readonly spellcheck="false"></textarea>
+        </div>
+      </section>
+
+      <!-- IMAGE TAB -->
+      <section id="panel-image" class="panel hidden" role="tabpanel">
+        <div class="drop-zone" id="drop-image" tabindex="0" role="button" aria-label="Drop a PDF or click to choose">
+          <div class="drop-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="10" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2" fill="none"/>
+              <circle cx="16" cy="20" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path d="M6 32l10-10 8 8 6-6 12 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <p class="drop-title">Drop a PDF here</p>
+          <p class="drop-sub">or <span class="link">click to choose a file</span></p>
+          <p class="drop-limits">Up to 256 MB · 250 pages</p>
+        </div>
+
+        <div class="settings-area hidden" id="settings-image">
+          <div class="settings-file-info">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M9 1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5L9 1zm0 1.5L12.5 5H9V2.5z"/></svg>
+            <span id="image-filename">No file selected</span>
+            <button class="btn-icon" id="btn-change-pdf" title="Change file">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M1 7a6 6 0 1 1 12 0A6 6 0 0 1 1 7zm5-1V4l-3 3 3 3V8a3 3 0 0 1 3 3h1a4 4 0 0 0-4-5z"/></svg>
+            </button>
+          </div>
+
+          <div class="settings-grid">
+            <div class="setting-row">
+              <label for="input-dpi">DPI</label>
+              <div class="setting-control">
+                <input type="number" id="input-dpi" value="150" min="72" max="600" step="1" />
+                <span class="setting-hint">72–600</span>
+              </div>
+            </div>
+            <div class="setting-row">
+              <label for="input-format">Format</label>
+              <select id="input-format">
+                <option value="png">PNG</option>
+                <option value="jpg" selected>JPEG</option>
+                <option value="webp">WebP</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <label for="input-quality">Quality</label>
+              <div class="setting-control">
+                <input type="range" id="input-quality" value="85" min="1" max="100" />
+                <span class="setting-value" id="quality-value">85</span>
+              </div>
+            </div>
+            <div class="setting-row">
+              <label for="input-prefix">Filename</label>
+              <input type="text" id="input-prefix" value="page" placeholder="page" />
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-full" id="btn-convert">Convert to Images</button>
+        </div>
+
+        <div class="progress-area hidden" id="progress-image">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-fill-image"></div>
+          </div>
+          <p class="progress-label" id="progress-label-image">Converting…</p>
+        </div>
+
+        <div class="output-done hidden" id="output-image">
+          <div class="done-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="20" stroke="#2ec27e" stroke-width="2.5" fill="none"/>
+              <path d="M15 24l6 6 12-12" stroke="#2ec27e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="done-title" id="image-done-label">Done!</p>
+          <div class="done-actions">
+            <button class="btn btn-ghost" id="btn-open-folder">Open Folder</button>
+            <button class="btn btn-primary" id="btn-new-image">Convert Another</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <div class="toast hidden" id="toast" role="alert" aria-live="polite"></div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
