@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "identifier": "io.github.micaelvinhas.pdftools",
   "build": {
-    "frontendDist": "../",
+    "frontendDist": "../frontend",
     "devUrl": null
   },
   "app": {
@@ -37,7 +37,7 @@
       "icons/128x128@2x.png"
     ],
     "resources": {
-      "../../sidecar/pdf_worker.py": "sidecar/pdf_worker.py"
+      "../sidecar/pdf_worker.py": "sidecar/pdf_worker.py"
     }
   }
 }

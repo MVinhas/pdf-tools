@@ -19,7 +19,7 @@ Built with [Tauri 2](https://tauri.app), [PyMuPDF](https://pymupdf.readthedocs.i
 
 ## Prerequisites
 
-All platforms need **Rust**, **Node.js**, and **Python 3 + PyMuPDF**.
+All platforms need **Rust**, **Node.js**, and **Python 3 + PyMuPDF + Pillow**.
 
 | Tool | Version |
 |---|---|
@@ -27,10 +27,11 @@ All platforms need **Rust**, **Node.js**, and **Python 3 + PyMuPDF**.
 | Node.js | 18 LTS+ |
 | Python | 3.10+ |
 | PyMuPDF | 1.27+ |
+| Pillow | 10+ |
 
-Install PyMuPDF on any platform:
+Install Python dependencies on any platform:
 ```bash
-pip3 install pymupdf
+pip3 install pymupdf pillow
 ```
 
 ---
@@ -50,7 +51,7 @@ source "$HOME/.cargo/env"
 # WebKit (included in Xcode Command Line Tools)
 xcode-select --install
 
-pip3 install pymupdf
+pip3 install pymupdf pillow
 ```
 
 ### Run in development
@@ -116,7 +117,7 @@ sudo apt install -y nodejs npm curl build-essential \
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source "$HOME/.cargo/env"
 
-pip3 install pymupdf
+pip3 install pymupdf pillow
 ```
 
 ### Run in development
@@ -165,7 +166,7 @@ chmod +x pdf-tools_*.AppImage
    - Select "Desktop development with C++"
 
 ```powershell
-pip install pymupdf
+pip install pymupdf pillow
 ```
 
 ### Run in development
@@ -191,10 +192,11 @@ npm run build
 ## Project structure
 
 ```
-index.html              App shell — two-tab layout
-src/
-  style.css             All styles (CSS variables, dark mode)
-  main.js               Tab logic, Tauri invoke() calls, progress events
+frontend/
+  index.html            App shell — two-tab layout
+  src/
+    style.css           All styles (CSS variables, dark mode)
+    main.js             Tab logic, Tauri invoke() calls, progress events
 src-tauri/
   src/lib.rs            Tauri commands: extract_text, convert_to_images
   tauri.conf.json       App config and bundle targets

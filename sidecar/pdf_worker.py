@@ -97,7 +97,9 @@ def op_convert_images(path, output_dir, dpi, fmt, quality, prefix):
         if fmt == "jpg":
             pix.save(out_path, jpg_quality=quality)
         elif fmt == "webp":
-            pix.save(out_path, jpg_quality=quality)
+            from PIL import Image
+            img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+            img.save(out_path, "WEBP", quality=quality)
         else:
             pix.save(out_path)
 
